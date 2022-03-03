@@ -2,14 +2,15 @@ const Army = require('../models/Army.model');
 
 const router = require('express').Router();
 
-router.get('/', (req, res, next) => {
-  res.json('All good in here');
+router.get('/army', async (req, res, next) => {
+  const showArmies = await Army.find();
+  res.json(showArmies);
 });
 
 /*create an army */
 router.post('/army', async (req, res, next) => {
-  const { heroe, general, infantry, artillery, name, advice, gold } = req.body;
-  const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice, gold });
+  const { heroe, general, infantry, artillery, name, advice } = req.body;
+  const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice });
   res.json(newArmy);
 });
 
@@ -22,16 +23,11 @@ router.get('/army/:id', async (req, res, next) => {
 });
 
 router.post('/army/:id', async (req, res, next) => {
-  const { heroe, general, infantry, artillery, name, advice, gold } = req.body;
+  const { heroe, general, infantry, artillery, name, advice } = req.body;
   const { id } = req.params;
-  const foundArmy = await Army.findByIdAndUpdate(id, { $set: { heroe, general, infantry, artillery, name, advice, gold } });
+  const createdBy = req.session.currentUser._id;
+  const foundArmy = await Army.findByIdAndUpdate(id, { $set: { heroe, general, infantry, artillery, name, advice, createdBy } });
   res.json(foundArmy);
-});
-
-/*Show all armies*/
-router.get('/army', async (req, res, next) => {
-  const showArmies = await Army.find();
-  res.json(showArmies);
 });
 
 /*Delete an army*/
