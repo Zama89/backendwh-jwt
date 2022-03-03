@@ -122,4 +122,16 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
+//GET LOGIN FORM//
+
+/*router.get("/login", (req, res, next) => {
+})*/
+
+//GET LOG OUT//
+router.get('/logout', isAuthenticated, (req, res, next) => {
+  req.session.destroy();
+  res.status(204).send();
+  return;
+});
+
 module.exports = router;

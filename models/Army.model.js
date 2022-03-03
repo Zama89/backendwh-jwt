@@ -8,8 +8,23 @@ const armySchema = new Schema({
   artillery: { type: String, enum: ['Lanzaagravios', 'Cañón', 'Cañón órgano', 'Lanzallamas', 'Girocóptero', 'Girocóptero bombardero'] },
   name: String,
   advice: String,
+  gold: Number,
 });
 
 const Army = mongoose.model('Army', armySchema);
+
+const proveArmy = async () => {
+  const heroe = 'Thorgrim';
+  const general = 'Maestro Ingeniero';
+  const infantry = 'Guerreros Enanos';
+  const artillery = 'Cañón';
+  const name = 'ModeloPrueba';
+  const advice = 'No sirve de nada';
+  const gold = 300;
+  const army = await Army.create({ heroe, general, infantry, artillery, name, advice, gold });
+  console.log(army);
+};
+
+/*proveArmy();*/
 
 module.exports = Army;
