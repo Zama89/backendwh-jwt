@@ -12,7 +12,7 @@ const app = express();
 require('./config')(app);
 
 app.use('/api', allRoutes);
-app.use('/api', armyRouter);
+app.use('/api/army', armyRouter);
 app.use('/api/protected', isAuthenticated, protectedRoute);
 app.use('/auth', authRouter);
 
