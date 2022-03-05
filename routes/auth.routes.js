@@ -134,9 +134,11 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
 
 /*router.get("/login", (req, res, next) => {
 })*/
+//queda pendiente//
 
 //GET LOG OUT//
 router.get('/logout', isAuthenticated, (req, res, next) => {
+  console.log('cierre de la sesion del usuario');
   req.session.destroy();
   res.status(204).send();
   return;
