@@ -8,7 +8,6 @@ const armySchema = new Schema({
   artillery: { type: String, enum: ['Lanzaagravios', 'Cañón', 'Cañón órgano', 'Lanzallamas', 'Girocóptero', 'Girocóptero bombardero'] },
   name: String,
   advice: String,
-  createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Army = mongoose.model('Army', armySchema);
