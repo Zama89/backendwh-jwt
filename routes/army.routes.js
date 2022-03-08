@@ -3,12 +3,16 @@ const Army = require('../models/Army.model');
 const router = require('express').Router();
 
 router.get('/', async (req, res, next) => {
-  res.json('home');
+  /*res.json('home');*/
+  const showArmies = await Army.find({});
+  console.log(showArmies);
+  res.json(showArmies);
 }); /*acabar home*/
 
 /*GET ARMIES*/
 router.get('/army', async (req, res, next) => {
   const showArmies = await Army.find();
+  console.log(showArmies);
   res.json(showArmies);
 });
 
