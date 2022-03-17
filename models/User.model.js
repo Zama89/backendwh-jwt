@@ -12,7 +12,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'password is required'],
   },
-  armies: [{ type: Schema.Types.ObjectId, ref: 'Army' }],
+  favoriteArmies: [{ type: [Schema.Types.ObjectId] }],
 });
 
 /*const userSchema = new Schema({

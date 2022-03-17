@@ -17,9 +17,9 @@ router.get('/army', async (req, res, next) => {
 });
 
 /*create an army */
-router.post('/army', async (req, res, next) => {
-  const { heroe, general, infantry, artillery, name, advice } = req.body;
-  const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice });
+router.post('/add', async (req, res, next) => {
+  const { heroe, general, infantry, artillery, name, advice, owner } = req.body;
+  const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice, owner });
   /*añadir vinculación IdUser con su ejercito correspondiente*/
   res.json(newArmy);
 });
@@ -27,8 +27,7 @@ router.post('/army', async (req, res, next) => {
 /*GET one army*/
 router.get('/army/:id', async (req, res, next) => {
   const { id } = req.params;
-
-  const oneArmy = await Army.findById(id);
+  const oneArmy = await Army.findById(id).populate('owner');
   res.json(oneArmy);
 });
 
@@ -45,6 +44,13 @@ router.delete('/army/:id', async (req, res, next) => {
   const { id } = req.params;
   const deletedArmy = await Army.findByIdAndDelete(id);
   res.json(deletedArmy);
+});
+
+//show armies del user
+router.get('/myarmies/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const oneArmy = await Army.find({ owner: id }).populate('owner');
+  res.json(oneArmy);
 });
 
 module.exports = router;

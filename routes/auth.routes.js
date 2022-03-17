@@ -49,20 +49,21 @@ router.post('/signup', (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       console.log('Aquí no ha petado aún');
+      const favoriteArmies = [];
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, hashedPassword, username: name });
+      return User.create({ email, hashedPassword, username: name, favoriteArmies });
     })
     .then(createdUser => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { email, username, _id } = createdUser;
+      const { email, username, _id, favoriteArmies } = createdUser;
 
       console.log('Usuario creado' + createdUser);
 
       // Create a new object that doesn't expose the password
-      const user = { email, username, _id };
+      const user = { email, username, _id, favoriteArmies };
 
       console.log('Usuario' + user);
 
@@ -99,10 +100,10 @@ router.post('/login', (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, username } = foundUser;
+        const { _id, email, username, favoriteArmies } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, username };
+        const payload = { _id, email, username, favoriteArmies };
 
         // Create and sign the token
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {

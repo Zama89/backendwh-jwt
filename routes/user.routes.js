@@ -16,4 +16,11 @@ router.post('/:id', async (req, res, next) => {
   res.json(foundUser);
 });
 
+router.post('/setfavorite/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const { favoriteArmies } = req.body;
+  const foundUser = await User.findByIdAndUpdate(id, { $set: { favoriteArmies } });
+  res.json(foundUser);
+});
+
 module.exports = router;
