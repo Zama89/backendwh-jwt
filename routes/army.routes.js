@@ -53,4 +53,11 @@ router.get('/myarmies/:id', async (req, res, next) => {
   res.json(oneArmy);
 });
 
+//show favorites armies del user
+router.get('/my-favorites', async (req, res, next) => {
+  const user = req.payload;
+  const favoriteArmies = await Army.find({ _id: user.favoriteArmies.includes(_id) });
+  res.json(favoriteArmies);
+});
+
 module.exports = router;
