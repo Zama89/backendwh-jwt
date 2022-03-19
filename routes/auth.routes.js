@@ -117,18 +117,20 @@ router.post('/login', (req, res, next) => {
         res.status(401).json({ message: 'Unable to authenticate the user' });
       }
     })
-    .catch(err => res.status(500).json({ message: 'Internal Server Error' }));
+    .catch(err => res.status(500).json({ message: err.message }));
 });
 
 // GET  /auth/verify
-router.get('/verify', isAuthenticated, (req, res, next) => {
+router.get('/verify', isAuthenticated, async (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and made available on `req.payload`
   console.log(`req.payload`, req.payload);
+  const id = req.payload._id;
+  const user = await User.findById(id);
 
   // Send back the object with user data
   // previously set as the token payload
-  res.status(200).json(req.payload);
+  res.status(200).json(user);
 });
 
 //GET LOGIN FORM//

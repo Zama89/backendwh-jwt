@@ -12,10 +12,9 @@ const app = express();
 
 require('./config')(app);
 
+app.use('/auth', authRouter);
 app.use('/api', allRoutes);
 app.use('/api', armyRouter);
-app.use('/api/protected', isAuthenticated, protectedRoute);
-app.use('/auth', authRouter);
 app.use('/user', userRouter);
 
 require('./error-handling')(app);
