@@ -17,16 +17,16 @@ router.post('/:id', async (req, res, next) => {
   res.json(foundUser);
 });
 
-router.post('/setfavorite/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.post('/setfavorite', async (req, res, next) => {
+  const user = req.payload;
 
-  const { favoriteArmies } = req.body;
+  const { armyId } = req.body;
 
-  const foundUser = await User.findByIdAndUpdate(id, { $set: { favoriteArmies } });
+  const foundUser = await User.findByIdAndUpdate(user._id, { $set: { armyId } });
   res.json(foundUser);
 });
 
-router.get('/is-favorite/:favId', async () => {
+router.get('/is-favorite/:favId', async (req, res, next) => {
   const { favId } = req.params;
   const user = req.payload;
   const userFound = await User.find({ _id: user._id, favoriteArmies: { $in: [favId] } }).populate('favoriteArmies');
