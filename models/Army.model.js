@@ -21,9 +21,8 @@ const proveArmy = async () => {
   const name = 'ModeloPrueba';
   const advice = 'No sirve de nada';
   const army = await Army.create({ heroe, general, infantry, artillery, name, advice });
-  console.log(army);
+  console.log();
+  army;
 };
-
-/*proveArmy();*/
 
 module.exports = Army;
