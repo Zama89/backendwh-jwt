@@ -13,16 +13,4 @@ const armySchema = new Schema({
 
 const Army = mongoose.model('Army', armySchema);
 
-const proveArmy = async () => {
-  const heroe = 'Thorgrim';
-  const general = 'Maestro Ingeniero';
-  const infantry = 'Guerreros Enanos';
-  const artillery = 'Cañón';
-  const name = 'ModeloPrueba';
-  const advice = 'No sirve de nada';
-  const army = await Army.create({ heroe, general, infantry, artillery, name, advice });
-  console.log();
-  army;
-};
-
 module.exports = Army;
