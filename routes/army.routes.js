@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   const showArmies = await Army.find({});
   console.log(showArmies);
   res.json(showArmies);
-}); /*acabar home*/
+});
 
 /*GET ARMIES*/
 router.get('/army', async (req, res, next) => {
@@ -20,7 +20,6 @@ router.get('/army', async (req, res, next) => {
 router.post('/add', async (req, res, next) => {
   const { heroe, general, infantry, artillery, name, advice, owner } = req.body;
   const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice, owner });
-  /*añadir vinculación IdUser con su ejercito correspondiente*/
   res.json(newArmy);
 });
 
@@ -52,12 +51,5 @@ router.get('/myarmies/:id', async (req, res, next) => {
   const oneArmy = await Army.find({ owner: id }).populate('owner');
   res.json(oneArmy);
 });
-
-//show favorites armies del user
-// // // router.get('/my-favorites', async (req, res, next) => {
-// // //   const user = req.payload;
-// // //   const favoriteArmies = await Army.find({ _id: user.favoriteArmies.includes(_id) });
-// // //   res.json(favoriteArmies);
-// // // });
 
 module.exports = router;
