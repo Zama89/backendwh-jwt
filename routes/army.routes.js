@@ -3,16 +3,13 @@ const Army = require('../models/Army.model');
 const router = require('express').Router();
 
 router.get('/', async (req, res, next) => {
-  /*res.json('home');*/
   const showArmies = await Army.find({});
-  console.log(showArmies);
   res.json(showArmies);
 });
 
 /*GET ARMIES*/
 router.get('/army', async (req, res, next) => {
   const showArmies = await Army.find();
-  console.log(showArmies);
   res.json(showArmies);
 });
 
@@ -31,7 +28,6 @@ router.get('/army/:id', async (req, res, next) => {
 });
 
 router.post('/army/:id', async (req, res, next) => {
-  console.log('actualizando');
   const { heroe, general, infantry, artillery, name, advice } = req.body;
   const { id } = req.params;
   const foundArmy = await Army.findByIdAndUpdate(id, { $set: { heroe, general, infantry, artillery, name, advice } });
