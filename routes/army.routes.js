@@ -1,5 +1,5 @@
 const Army = require('../models/Army.model');
-
+const { isAuthenticated } = require('../middleware/jwt.middleware');
 const router = require('express').Router();
 
 router.get('/', async (req, res, next) => {
@@ -14,7 +14,7 @@ router.get('/army', async (req, res, next) => {
 });
 
 /*create an army */
-router.post('/add', async (req, res, next) => {
+router.post('/add', isAuthenticated, async (req, res, next) => {
   const { heroe, general, infantry, artillery, name, advice, owner } = req.body;
   const newArmy = await Army.create({ heroe, general, infantry, artillery, name, advice, owner });
   res.json(newArmy);
@@ -27,7 +27,7 @@ router.get('/army/:id', async (req, res, next) => {
   res.json(oneArmy);
 });
 
-router.post('/army/:id', async (req, res, next) => {
+router.post('/army/:id', isAuthenticated, async (req, res, next) => {
   const { heroe, general, infantry, artillery, name, advice } = req.body;
   const { id } = req.params;
   const foundArmy = await Army.findByIdAndUpdate(id, { $set: { heroe, general, infantry, artillery, name, advice } });
@@ -35,14 +35,14 @@ router.post('/army/:id', async (req, res, next) => {
 });
 
 /*Delete an army*/
-router.delete('/army/:id', async (req, res, next) => {
+router.delete('/army/:id', isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const deletedArmy = await Army.findByIdAndDelete(id);
   res.json(deletedArmy);
 });
 
 //show armies del user
-router.get('/myarmies/:id', async (req, res, next) => {
+router.get('/myarmies/:id', isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const oneArmy = await Army.find({ owner: id }).populate('owner');
   res.json(oneArmy);

@@ -1,8 +1,6 @@
 const res = require('express/lib/response');
 const User = require('../models/User.model');
-
 const router = require('express').Router();
-
 const { isAuthenticated } = require('../middleware/jwt.middleware');
 
 router.post('/:id', async (req, res, next) => {
